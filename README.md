@@ -17,13 +17,26 @@ A simple Python script to download videos and audio from various platforms using
 
 ## Installation
 
-### 1. Install Python Dependencies
+### 1. Create Virtual Environment (Recommended)
+
+```bash
+# Create virtual environment
+python -m venv venv
+
+# Activate virtual environment
+# On macOS/Linux:
+source venv/bin/activate
+# On Windows:
+venv\Scripts\activate
+```
+
+### 2. Install Python Dependencies
 
 ```bash
 pip install yt-dlp
 ```
 
-### 2. Install FFmpeg
+### 3. Install FFmpeg
 
 **macOS (using Homebrew):**
 ```bash
@@ -42,14 +55,22 @@ sudo apt install ffmpeg
 
 ## Usage
 
-1. Run the script:
+1. Activate the virtual environment (if using):
+```bash
+# On macOS/Linux:
+source venv/bin/activate
+# On Windows:
+venv\Scripts\activate
+```
+
+2. Run the script:
 ```bash
 python download.py
 ```
 
-2. Enter the video URL when prompted
+3. Enter the video URL when prompted
 
-3. Choose format:
+4. Choose format:
    - `mp4` for video download
    - `mp3` for audio-only download
 
