@@ -7,8 +7,12 @@ A simple Python script to download videos and audio from various platforms using
 - Download videos in MP4 format with quality selection
 - Extract audio in MP3 format
 - Support for multiple video platforms (YouTube, Vimeo, and many others)
-- Interactive quality selection
-- File size information display
+- Interactive quality selection with file size information
+- **Playlist support with sequential ordering**
+- **Custom download location selection**
+- **Playlist limit control (download specific number of videos)**
+- **Graceful interruption handling (Ctrl+C preserves downloaded files)**
+- **Sequential file numbering for playlists (01 - Title.mp3, 02 - Title.mp3, etc.)**
 
 ## Requirements
 
@@ -101,9 +105,12 @@ python download.py
 
 ## Example
 
+### Single Video Download
 ```
 Enter the video URL: https://www.youtube.com/watch?v=example
 Choose format (mp4 for video, mp3 for audio): mp4
+Enter download path (or press Enter for current directory): ~/Downloads
+📁 Videos will be saved to: /Users/username/Downloads
 
 Available qualities:
 1: format_id=137 - ext=mp4 - 1080p - 45.2 MB
@@ -112,6 +119,25 @@ Available qualities:
 
 Select quality (number): 1
 ✅ Download complete!
+```
+
+### Playlist Download
+```
+Enter the video URL: https://www.youtube.com/playlist?list=example
+Choose format (mp4 for video, mp3 for audio): mp3
+Enter number of videos to download (or press Enter for all): 23
+Enter download path (or press Enter for current directory): ~/Music
+📁 Videos will be saved to: /Users/username/Music
+🔍 Getting playlist information...
+📋 Found 23 videos to download
+
+🎵 [1/23] Downloading: Song Title 1
+✅ Downloaded: Song Title 1
+
+🎵 [2/23] Downloading: Song Title 2
+✅ Downloaded: Song Title 2
+...
+🎉 Download complete! 23 videos saved.
 ```
 
 ## Supported Platforms
@@ -127,6 +153,14 @@ This script supports hundreds of video platforms including:
 
 ## Notes
 
+- **Custom Download Location**: Choose where to save your files
+- **Playlist Ordering**: Downloads maintain the exact playlist order
+- **Sequential Numbering**: Playlist files are numbered (01 - Title.mp3, 02 - Title.mp3, etc.)
+- **Interruption Safe**: Press Ctrl+C to stop - already downloaded files are preserved
+- **Audio Quality**: MP3 downloads are extracted at 192 kbps quality
+- **Video Quality**: High-quality video downloads may require merging separate video and audio streams
+- **Directory Creation**: Script can create download directories if they don't exist
+=======
 - Downloaded files are saved in the same directory as the script
 - For MP3 downloads, audio is extracted at 192 kbps quality
 - High-quality video downloads may require merging separate video and audio streams
