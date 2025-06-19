@@ -107,3 +107,7 @@ This script supports hundreds of video platforms including:
 - Downloaded files are saved in the same directory as the script
 - For MP3 downloads, audio is extracted at 192 kbps quality
 - High-quality video downloads may require merging separate video and audio streams
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
