@@ -38,7 +38,6 @@ def get_download_path():
         if not path:
             return os.getcwd()
         
-        # Expand user path (~)
         path = os.path.expanduser(path)
         
         if os.path.exists(path) and os.path.isdir(path):
@@ -77,7 +76,6 @@ def get_video_info(url, limit=None):
             return None
 
 def choose_quality(formats, want_audio_only=False):
-
     filtered_formats = []
     if want_audio_only:
         filtered_formats = [f for f in formats if f.get('vcodec') == 'none' and f.get('acodec') != 'none']
@@ -117,23 +115,18 @@ def main():
     if 'playlist' in url or 'list=' in url:
         playlist_limit = get_playlist_limit()
     
-    # Get download path
     download_path = get_download_path()
     print(f"📁 Videos will be saved to: {download_path}")
 
-    # Get playlist info with limit
     print("🔍 Getting playlist information...")
     info = get_video_info(url, playlist_limit)
     if not info:
         return
-
-    # Extract individual video URLs in order
     if 'entries' in info:
         entries = [entry for entry in info['entries'] if entry is not None]
         
         print(f"📋 Found {len(entries)} videos to download")
         
-        # Download each video individually to maintain order
         downloaded_count = 0
         for i, entry in enumerate(entries, 1):
             video_url = entry.get('webpage_url') or f"https://www.youtube.com/watch?v={entry['id']}"
@@ -141,7 +134,6 @@ def main():
             
             print(f"\n🎵 [{i}/{len(entries)}] Downloading: {title}")
             
-            # Individual download options with quiet mode
             ydl_opts = {
                 'outtmpl': os.path.join(download_path, f'{i:02d} - %(title)s.%(ext)s'),
                 'format': 'bestaudio/best',
@@ -168,7 +160,6 @@ def main():
         
         print(f"\n🎉 Download complete! {downloaded_count} videos saved.")
     else:
-        # Single video download
         base_opts = {
             'outtmpl': os.path.join(download_path, '%(title)s.%(ext)s'),
             'ignoreerrors': True,
