@@ -160,3 +160,11 @@ This script supports hundreds of video platforms including:
 - **Audio Quality**: MP3 downloads are extracted at 192 kbps quality
 - **Video Quality**: High-quality video downloads may require merging separate video and audio streams
 - **Directory Creation**: Script can create download directories if they don't exist
+=======
+- Downloaded files are saved in the same directory as the script
+- For MP3 downloads, audio is extracted at 192 kbps quality
+- High-quality video downloads may require merging separate video and audio streams
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
