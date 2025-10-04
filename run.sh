@@ -55,11 +55,9 @@ fi
 echo "Activating virtual environment..."
 source venv/bin/activate
 
-# Check if yt-dlp is installed
-if ! pip show yt-dlp > /dev/null 2>&1; then
-    echo "Installing yt-dlp..."
-    pip install yt-dlp
-fi
+# Install/upgrade yt-dlp to latest version
+echo "Installing/upgrading yt-dlp..."
+pip install --upgrade yt-dlp
 
 # Run the download script
 echo "Starting video downloader..."

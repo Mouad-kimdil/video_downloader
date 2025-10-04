@@ -76,11 +76,14 @@ def get_video_info(url, limit=None):
             return None
 
 def choose_quality(formats, want_audio_only=False):
-    filtered_formats = []
     if want_audio_only:
         filtered_formats = [f for f in formats if f.get('vcodec') == 'none' and f.get('acodec') != 'none']
     else:
         filtered_formats = [f for f in formats if f.get('vcodec') != 'none']
+    
+    if not filtered_formats:
+        print("❌ No suitable formats found. Using best available format.")
+        return 'best'
 
     print("\nAvailable qualities:")
     for i, f in enumerate(filtered_formats):
@@ -97,7 +100,9 @@ def choose_quality(formats, want_audio_only=False):
             choice = int(input("Select quality (number): ")) - 1
             if 0 <= choice < len(filtered_formats):
                 return filtered_formats[choice]['format_id']
-        except ValueError:
+        except (ValueError, KeyboardInterrupt):
+            if KeyboardInterrupt:
+                raise
             pass
         print("Invalid choice. Try again.")
 
@@ -177,18 +182,24 @@ def main():
             }
         else:
             format_id = choose_quality(info['formats'], want_audio_only=False)
-            selected_format = next(f for f in info['formats'] if f['format_id'] == format_id)
-            if selected_format.get('vcodec') != 'none' and selected_format.get('acodec') == 'none':
+            if format_id == 'best':
                 ydl_opts = {
                     **base_opts,
-                    'format': f"{format_id}+bestaudio/best",
-                    'merge_output_format': 'mp4',
+                    'format': 'best[ext=mp4]/best',
                 }
             else:
-                ydl_opts = {
-                    **base_opts,
-                    'format': format_id,
-                }
+                selected_format = next((f for f in info['formats'] if f['format_id'] == format_id), None)
+                if selected_format and selected_format.get('vcodec') != 'none' and selected_format.get('acodec') == 'none':
+                    ydl_opts = {
+                        **base_opts,
+                        'format': f"{format_id}+bestaudio/best",
+                        'merge_output_format': 'mp4',
+                    }
+                else:
+                    ydl_opts = {
+                        **base_opts,
+                        'format': format_id,
+                    }
 
         try:
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
